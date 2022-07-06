@@ -1,0 +1,17 @@
+<h1>Question</h1>
+<form method='post' action=''>
+  {% csrf_token %}
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="questionID" id="Option1">
+    <label class="form-check-label" for="Option1">
+      Option1
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="questionID" id="Option2">
+    <label class="form-check-label" for="Option2">
+      Option2
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
