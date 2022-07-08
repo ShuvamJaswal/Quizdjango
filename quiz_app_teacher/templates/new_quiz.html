@@ -1,0 +1,5 @@
+<h2>New Quiz</h2>
+    <form method="POST" class="quiz-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
