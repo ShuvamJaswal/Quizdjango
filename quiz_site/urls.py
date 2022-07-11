@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.shortcuts import redirect
 
-urlpatterns = [
+urlpatterns = [path('__debug__/', include('debug_toolbar.urls')),#debug toolbar
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('/student/')),#redirect to /student if entered base url
     path('student/', include('quiz_app_student.urls')),

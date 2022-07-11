@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+    <ol>
+        {% for link in questions %}
+          <li>
+            {{link.question}}
+            <br>
+             {% if  link.answer == 'A' %}
+             <span style="color: green">{{ link.A }}</span>
+             {% else %}
+             {{link.A}}
+            {% endif %}
+            {% if link.answer == 'B' %}
+             <span style="color: green">{{ link.B }}</span>
+             {% else %}
+             {{link.B}}
+            {% endif %}
+            {% if link.answer == 'C' %}
+             <span style="color: green">{{ link.C }}</span>
+             {% else %}
+             {{link.C}}
+            {% endif %}
+            {% if link.answer == 'D' %}
+             <span style="color: green">{{ link.D }}</span>
+             {% else %}
+             {{link.D}}
+            {% endif %}
+        </li>
+        {% endfor %} 
+      </ol>
+    <h2>Add Question</h2>
+    <form method="POST" class="add-question-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="Save" class="save btn btn-secondary">Save Quiz</button>
+        <button type="submit" name="Add Another Question" class="save btn btn-secondary">Add Another Question</button>
+    </form>
+{% endblock content%}
+
+
