@@ -26,7 +26,7 @@ class AddQuestionForm(forms.ModelForm):
     class Meta:
         
         model=models.Question
-
+        exclude = ('question_number',)
 
         #widgets={'answer':forms.RadioSelect(attrs={'class': 'form-check-inline','size':'400'})}
         # widgets={'answer': forms.IntegerField(required=True, label="Mobile No",

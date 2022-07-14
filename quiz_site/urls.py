@@ -19,7 +19,8 @@ from django.shortcuts import redirect
 
 urlpatterns = [path('__debug__/', include('debug_toolbar.urls')),#debug toolbar
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('/student/')),#redirect to /student if entered base url
+    path('', include('accounts.urls'), name='home'),
+    #path('', lambda request: redirect('/student/')),#redirect to /student if entered base url
     path('student/', include('quiz_app_student.urls')),
     path('teacher/', include('quiz_app_teacher.urls')),
 ]
