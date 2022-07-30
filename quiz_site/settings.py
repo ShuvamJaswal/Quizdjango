@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-import os                 #debug toolbar
+import os  # debug toolbar
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-yrta_x+gv%*sx16hxg%%$km)&&*eo7m^t2vz94-jz-0bcsmwz2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # TODO: change this for seccurity
 
 
 # Application definition
@@ -38,23 +38,28 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #MyApps
+    # MyApps
     'quiz_app_student',
     'quiz_app_teacher',
     'accounts',
-    #debug toolbar 
+    # debug toolbar
     "debug_toolbar",
+    # Crispy forms
+    'crispy_forms',
+    "crispy_bootstrap5",
 ]
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
-MIDDLEWARE = [ "debug_toolbar.middleware.DebugToolbarMiddleware",#debug toolbar
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware",  # debug toolbar
+              'django.middleware.security.SecurityMiddleware',
+              'django.contrib.sessions.middleware.SessionMiddleware',
+              'django.middleware.common.CommonMiddleware',
+              'django.middleware.csrf.CsrfViewMiddleware',
+              'django.contrib.auth.middleware.AuthenticationMiddleware',
+              'django.contrib.messages.middleware.MessageMiddleware',
+              'django.middleware.clickjacking.XFrameOptionsMiddleware',
+              ]
 
 ROOT_URLCONF = 'quiz_site.urls'
 
@@ -109,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
-INTERNAL_IPS = [#debug toolbar
+INTERNAL_IPS = [  # debug toolbar
     # ...
     "127.0.0.1",
     # ...
@@ -121,13 +126,14 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-AUTH_USER_MODEL = 'accounts.User'#to use custom user model
-LOGIN_URL = 'accounts/login'
+AUTH_USER_MODEL = 'accounts.User'  # to use custom user model
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = "/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')#debug toolbar
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # debug toolbar
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

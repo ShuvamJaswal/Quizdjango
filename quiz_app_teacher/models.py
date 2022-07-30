@@ -1,54 +1,75 @@
-from cProfile import label
+import json
 from django.utils import timezone
 from django.db import models
-from django.conf import settings
-from accounts import models
 # Create your models here.
 ANSWER_CHOICES = (
-   ('A', 'A'),
-   ('B', 'B'),
-   ('C','C'),
-   ('D','D'),
+    ('A', 'A'),
+    ('B', 'B'),
+    ('C', 'C'),
+    ('D', 'D'),
 )
+COURSE_YEAR_CHOICES = (
+    (1, '1st'),
+    (2, '2nd'),
+    (3, '3rd'),
+    (4, '4th'),
+)
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=30)
+    year = models.PositiveIntegerField(choices=COURSE_YEAR_CHOICES, default=1,)
+
+    def __str__(self):
+        return f'{self.name} ({dict(COURSE_YEAR_CHOICES).get(self.year)} Year)'
+
+
 class Quiz(models.Model):
- # many2many for having a list of questions inside quiz
-    #attempted_by=models.ManyToManyField(settings.AUTH_USER_MODEL,)
-    #result=models.ManyToManyField()
-    #Quiz.objects.get(quiz_id="fgvf-1749").questions.all()
-    #https://docs.djangoproject.com/en/3.2/topics/db/examples/many_to_many/
-    #https://www.sankalpjonna.com/learn-django/the-right-way-to-use-a-manytomanyfield-in-django
-    name=models.CharField(max_length=250)
-    quiz_id=models.CharField(max_length=300,)
+    name = models.CharField(max_length=250)
+    quiz_id = models.CharField(max_length=300,)
     created_date = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(models.User, on_delete=models.CASCADE,related_name='quizzes')
-    subject = models.ForeignKey(models.Course, on_delete=models.CASCADE, related_name='quizzes')
+    author = models.ForeignKey(
+        'accounts.Teacher', on_delete=models.CASCADE, related_name='quizzes')
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name='quizzes')
 
     def save(self, *args, **kwargs):
-        #override default save method to do something before saving object of model
         if not self.quiz_id:
-            self.quiz_id = self.name+"-"+self.created_date.strftime("%M%S")  #TODO:Edit this 
+            self.quiz_id = f"{self.name}-{self.created_date.strftime('%M%S')}"
         super(Quiz, self).save(*args, **kwargs)
-    def __str__(self):
-        return self.name 
 
-class result(models.Model):
-    #quiz=models.OneToOneField(Quiz,on_delete=models.CASCADE)
-    student=models.ForeignKey(models.User, on_delete=models.CASCADE)
-    quiz=models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='results')
-    points=models.IntegerField()
     def __str__(self):
-        return  f"Student name: { str(self.student)} Points:{ str(self.points)}"
+        return f"{self.name} By: {self.author} at {self.created_date.strftime('%H:%M, %d/%m/%Y')}"
+
+
+class Result(models.Model):
+    student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE,
+                                related_name='my_results')
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='results')
+    points = models.IntegerField(default=0)
+    answer_data = models.TextField(default='')
+    max_points = models.IntegerField(default=0)
+    submitted_at = models.DateTimeField(default=timezone.now)
+
+    def get_answer(self):
+        return json.dumps(self.answer_data)
+
+    def __str__(self):
+        return f"Student name: { str(self.student)} Max Points:{str(self.max_points)} Obtained Points:{str(self.points)}"
 
 
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
-    #quiz=models.ForeignKey(Quiz, on_delete=models.CASCADE)
-    question=models.CharField(max_length=300,)
+    quiz = models.ForeignKey(
+        Quiz, on_delete=models.CASCADE, related_name='questions')
+    question = models.CharField(max_length=300,)
     A = models.CharField(max_length=200,)
     B = models.CharField(max_length=200,)
     C = models.CharField(max_length=200,)
     D = models.CharField(max_length=200,)
-    answer = models.CharField(max_length=200,choices=ANSWER_CHOICES,default='A')
-    question_number=models.IntegerField()
+    answer = models.CharField(
+        max_length=200, choices=ANSWER_CHOICES, default='A')
+    question_number = models.IntegerField()
+
     def __str__(self):
-        return self.question
+        return f"{self.question_number}. {self.question}"

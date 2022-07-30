@@ -1,0 +1,10 @@
+{% extends 'teacher/base.html' %} 
+
+{% block content %}
+
+<form method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" value="Submit" class="save btn btn-secondary">Add Course</button>
+    </form>
+    {% for course in course_list %}  <p>{{course}}</p>  {% endfor %}
+{% endblock content%}

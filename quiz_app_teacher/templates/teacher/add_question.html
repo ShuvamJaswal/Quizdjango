@@ -1,8 +1,8 @@
-{% extends 'base.html' %} 
+{% extends 'teacher/base.html' %} 
 
 {% block content %}
 
-    <ol>
+    <!-- <ol>
         {% for link in questions %}
        
           <li>
@@ -32,7 +32,8 @@
         {% empty %}
         <li>Sorry, no Questions.</li>
         {% endfor %} 
-      </ol>
+      </ol> -->
+      <h1>Quiz: {{quiz_name}}</h1>
     <h2>Add Question</h2>
     <form method="POST" class="add-question-form">{% csrf_token %}
         {{ form.as_p }}
