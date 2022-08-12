@@ -17,6 +17,8 @@ COURSE_YEAR_CHOICES = (
 
 
 class Course(models.Model):
+    # class Meta:
+    #     ordering = ('name',)
     name = models.CharField(max_length=30)
     year = models.PositiveIntegerField(choices=COURSE_YEAR_CHOICES, default=1,)
 
@@ -31,7 +33,7 @@ class Quiz(models.Model):
     author = models.ForeignKey(
         'accounts.Teacher', on_delete=models.CASCADE, related_name='quizzes')
     course = models.ForeignKey(
-        Course, on_delete=models.CASCADE, related_name='quizzes')
+        Course, on_delete=models.CASCADE, related_name='quizzes',)
 
     def save(self, *args, **kwargs):
         if not self.quiz_id:
@@ -53,7 +55,7 @@ class Result(models.Model):
     submitted_at = models.DateTimeField(default=timezone.now)
 
     def get_answer(self):
-        return json.dumps(self.answer_data)
+        return eval(json.dumps(self.answer_data))
 
     def __str__(self):
         return f"Student name: { str(self.student)} Max Points:{str(self.max_points)} Obtained Points:{str(self.points)}"

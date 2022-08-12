@@ -1,20 +1,23 @@
-{% extends 'accounts/base.html' %} 
+{% extends  'accounts/base.html' %} 
 {% load crispy_forms_tags %}
 {% block content %}
 
-<head>
-  <style>
-
-    </style></head>
-<div class="row">
-    <div class="col-md-8 col-sm-10 col-12">
-      <h2>Sign up as a {{ user_type }}</h2>
+<div class="card border-primary">
+ 
+  <div class="card-header text-center">
+    <h2> <b> Sign up as a {{ user_type }}</b></h2>
+  </div>
+  <div class="card-body">
+    <div class="m-3">
       <form method="post" novalidate>
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Sign up</button>
+
+        <div class="text-center"><button class="btn btn-success w-50 " type="submit">Sign up</button></div>
+    
       </form>
     </div>
   </div>
+</div>
   {% endblock content %}

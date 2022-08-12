@@ -1,10 +1,52 @@
-{% extends 'teacher/base.html' %} 
+{% extends 'accounts/base.html' %} 
 
+{% load crispy_forms_tags %}
 {% block content %}
 
+
+<div class="card border-primary p-3">
+    
+      
+      <div class="card border-primary">
+        <div class="card-header border-primary text-center mb-3">
+            <h3> Add Course</h3>
+          </div>
+    
+        <div class="card-body">
 <form method="POST">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" value="Submit" class="save btn btn-secondary">Add Course</button>
+    {{ form|crispy }}
+    <button type="submit" value="Submit" class="save btn btn-primary">Add Course</button>
     </form>
-    {% for course in course_list %}  <p>{{course}}</p>  {% endfor %}
+        </div>
+
+
+
+    
+    </div>
+
+      {% if course_list %}
+      <div class="card border-primary mt-5">
+      
+      <div class="card-header border-primary text-center my-3">
+        <h3> Courses</h3>
+      </div>
+      <p>
+      <table class="table  table-bordered">
+        <tr>
+          <th>Course Name</th>
+          <th>Students</th>
+        </tr>
+        <br>
+        {% for course in course_list %}
+        <tr>
+          <td>{{course}}</td>
+          <td>{{course.course_students.count}} students</td>
+        </tr>
+        {% endfor %}
+      </table>
+      </p>
+      
+      {% endif %}
+      </div>
+</div></div>
 {% endblock content%}

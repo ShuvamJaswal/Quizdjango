@@ -1,48 +1,28 @@
-{% extends 'teacher/base.html' %} 
-
+{% extends 'accounts/base.html' %} 
 {% block content %}
+{% load crispy_forms_tags %}
 
-    <!-- <ol>
-        {% for link in questions %}
-       
-          <li>
-            {{link.question}}
-            <br>
-             {% if  link.answer == 'A' %}
-             <span style="color: green">{{ link.A }}</span>
-             {% else %}
-             {{link.A}}
-            {% endif %}
-            {% if link.answer == 'B' %}
-             <span style="color: green">{{ link.B }}</span>
-             {% else %}
-             {{link.B}}
-            {% endif %}
-            {% if link.answer == 'C' %}
-             <span style="color: green">{{ link.C }}</span>
-             {% else %}
-             {{link.C}}
-            {% endif %}
-            {% if link.answer == 'D' %}
-             <span style="color: green">{{ link.D }}</span>
-             {% else %}
-             {{link.D}}
-            {% endif %}
-        </li>
-        {% empty %}
-        <li>Sorry, no Questions.</li>
-        {% endfor %} 
-      </ol> -->
-      <h1>Quiz: {{quiz_name}}</h1>
-    <h2>Add Question</h2>
-    <form method="POST" class="add-question-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="Save" class="save btn btn-secondary">Save Quiz</button>
-        <button type="submit" name="Add Another Question" class="save btn btn-secondary">Add Another Question</button>
-    </form>
-    <!-- <input type="button" value="Reload Page" onClick="window.location.reload()" -->
 
+
+<body>
+  <div class="card  border-primary m-2 ">
+    <div class="card  m-2 ">
+      <h5 class="card-title ">
+        <p class="m-2 text-center ">  <b>{{quiz_name}}</b>
+        </p>
+      </h5>
  
+    </div>
+    <div class="card-body">
+      <div class="m-3">
+    {% crispy form %}
+      </div></div>
+  </div>
+</body>
+
+    
+       
+    
 
 {% endblock content%}
 

@@ -1,20 +1,80 @@
-{% extends 'accounts/base.html' %} 
+{% extends 'accounts/base.html' %}
 
 {% block content %}
+
+<head>
+  <style>
+    hr {
+      background-color: red;
+    }
+  </style>
+</head>
+
+
+<div class="card border-primary text-center">
+  <div class="card-body">
+
+    <h5 class="card-title mb-3">Welcome to the Quiz Site</h5>
+      <a type="button" href="{% url 'accounts:login' %}" class="btn btn-primary  w-50 m-3">Login</a>
+      <!-- <div  style="width: 100%;"> <div class="row">
+        <div class="col"><hr></div>
+        <div class="col-auto">OR</div>
+        <div class="col"><hr></div>
+    </div> </div> -->
+    <div class="row ">
+        <div class="col my-auto"><hr></div>
+        <div class="col-auto my-auto">OR</div>
+        <div class="col my-auto"><hr></div>
+    </div>
+      <a type="button" href="{% url 'accounts:teacher_signup' %}" class="btn btn-primary  w-50 m-3">Sign up as teacher</a>
+      
+      <a type="button" href="{% url 'accounts:student_signup' %}" class="btn btn-primary  w-50 mb-3">Sign up as student</a>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col"><hr></div>
+        <div class="col-auto">OR</div>
+        <div class="col"><hr></div>
+    </div>-->
+  
+
+</div>
+ 
+
+
+
+
+
+
+
+
+
+
+
+<!-- </div>
+
 <h2>Welcome to the Quiz Site.</h2>
-<p>
-    If you already have an account, go ahead and <a href="{% url 'accounts:login' %}">log in</a>. If you are new to Quiz, get started
-    by creating an Account.
-    <br>
-      What type of account do you want to create.
-      <!-- <form action="{% url 'accounts:signup' %}" method="POST">{% csrf_token %}
+ -->
+
+
+
+
+<!-- <p>
+  If you already have an account, go ahead and <a href="{% url 'accounts:login' %}">log in</a>. If you are new to Quiz,
+  get started
+  by creating an Account.
+  <br>
+  What type of account do you want to create.
+ <form action="{% url 'accounts:signup' %}" method="POST">{% csrf_token %}
           <input type = "hidden"  />
       <button type="submit" name="type" value="teacher"  class="save btn btn-secondary">Teacher</button> -->
-    <a type="submit" href="{% url 'accounts:student_signup' %}">student account</a> or a <a href="{% url 'accounts:teacher_signup'%}">teacher account</a>.
-     <!-- <form action="{% url 'accounts:signup' %}" method="POST">{% csrf_token %}
-        <button type="submit" name="type" value="student" class="save btn btn-secondary">Student</button> -->
-  
-  </p>
+  <!-- <a type="submit" href="{% url 'accounts:student_signup' %}">student account</a> or a <a
+    href="{% url 'accounts:teacher_signup'%}">teacher account</a>.
+<form action="{% url 'accounts:signup' %}" method="POST">{% csrf_token %}
+        <button type="submit" name="type" value="student" class="save btn btn-secondary">Student</button> 
 
-</form>
+</p> -->
+
+
+
 {% endblock content %}

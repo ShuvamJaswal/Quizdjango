@@ -1,13 +1,36 @@
-{% extends 'teacher/base.html' %} 
+{% extends 'accounts/base.html' %} 
 {% load crispy_forms_tags %}
 {% block content %}
-<a href="{% url 'teacher:course' %}?next={{request.path}}" class="btn btn-primary">Add Course</a>
 
-<h2>New Quiz</h2>
+
+<div class="card border-primary p-3">
+    
+    <div class="text-center">
+      <a href="{% url 'teacher:course' %}?next={{request.path}}" class="btn btn-primary mb-3">Add Course</a></div>
+        <div class="card-body">
+            <div class="card-header text-center mb-3">
+                <h3>New Quiz</h3>
+              </div>
+        
+
+
+
+          
     <form method="POST" novalidate class="quiz-form">{% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="save btn btn-secondary">Save</button>
+        <button type="submit" class="save btn btn-primary">Save</button>
     </form>
+          
+        </div>
+      </div>
+    
+    
+    
+    
+    
+    </div>
+
+
 
 {% endblock content%}
 

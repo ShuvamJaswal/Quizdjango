@@ -3,16 +3,22 @@ from django.contrib import messages
 from quiz_app_teacher.models import Quiz
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
-
 def teacher_required(
     function=None,
 ):
-    """
-    Decorator for views that checks that the user is logged in, redirecting
-    to the log-in page if necessary.
-    """
     actual_decorator = user_passes_test(
         lambda u: u.is_teacher,
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+
+def student_required(
+    function=None,
+):
+    actual_decorator = user_passes_test(
+        lambda u: u.is_student,
     )
     if function:
         return actual_decorator(function)

@@ -26,7 +26,6 @@ class UserForm(UserCreationForm):
         # }
 
     def clean_email(self):  # TODO:https://youtu.be/qFH8AFQYqME?t=215
-        print("Yoo")
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
             #self.add_error('email', 'msg')

@@ -1,18 +1,27 @@
-{% extends 'teacher/base.html' %}
+{% extends 'accounts/base.html' %}
 
 {% block content %}
 
-<a href="{% url 'teacher:quiz_new' %}" class="btn btn-primary">Create New Quiz</a>
+
+
+
+<div class="card border-primary p-3">
+<div class="text-center">
+  <a href="{% url 'teacher:quiz_new' %}" class="btn btn-primary mb-3">Create New Quiz</a></div>
 {% for quiz in myQuizzes %}
-<div class="card border-primary mb-3  w-50 " style="background-color: pink;">
+<div class="card border-primary mb-3 ">
     <div class="card-body">
       <h5 class="card-title">{{quiz.name}}</h5>
+      {% if quiz.questions.count == 0 %}
+      <p style="color: red;">This quiz has no questions</p>
+      {% endif %}
       <p class="card-text"><p>Created By: {{quiz.author}} at {{quiz.created_date|date}}</p>
       <a href="{% url 'teacher:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
     </div>
   </div>
 
 {% empty %}
-          <p class="bg-light text-center font-italic" colspan="5">You haven't created any quiz yet.</p>
+          <p class="bg-light text-center " colspan="5">You haven't created any quiz yet.</p>
 {% endfor %}
+</div>
 {% endblock content %}

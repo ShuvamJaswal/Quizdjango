@@ -1,39 +1,79 @@
-{% extends 'student/base.html' %} 
+{% extends 'accounts/base.html' %}
 
 {% block content %}
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/questions.css' %}" />
-<body><form method='post' action=''>
-    {% csrf_token %}
-    {% for question in questions %}
-    
+<link rel="stylesheet" href="{% static 'student/questions.css' %}" />
 
-<div class="container mt-sm-5 my-1" >
-  <div class="question ml-sm-5 pl-sm-5 pt-2">
-      <div class="py-2 h5"><b>Q.{{question.question_number}} {{question.question}}</b></div>
-      <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-          <label class="options">{{question.A}}
-              <input type="radio" name="Question {{question.question_number}}" value="A">
-              <span class="checkmark"></span>
-          </label>
-          <label class="options">{{question.B}}
-            <input type="radio" name="Question {{question.question_number}}"value="B">
-            <span class="checkmark"></span>
-        </label>
-          <label class="options">{{question.C}}
-              <input type="radio" name="Question {{question.question_number}}"value="C">
-              <span class="checkmark"></span>
-          </label>
-          <label class="options">{{question.D}}
-              <input type="radio" name="Question {{question.question_number}}" value="D">
-              <span class="checkmark"></span>
-          </label>
+<body>
+    <div class="card  border-primary m-2 ">
+      <div class="card  m-2 ">
+        <h5 class="card-title ">
+          <p class="m-2 text-center ">  <b>{{quiz.name}}</b>
+          </p>
+        </h5>
+   
       </div>
-  </div>
+    {% if questions %}
+
+
+    
+    <form method='post' action=''>
+        {% csrf_token %}
+        {% for question in questions %}
+
+
+
+
+
+
+
+
+
+        <div class="card border-primary m-3 ">
+            <div class="card-body">
+              <h5 class="card-title">
+                <p class="ml-2 mr-2 mb-2"> Q.{{question.question_number}} {{question.question}}
+                </p>
+              </h5>
+              <div class="card-text">
+        
+                <div class="form-check form-check-inline">
+                  <div class="pl-4" id="options">
+                    <label class="options ">{{question.A}}
+                      <input type="radio" 
+                        name="Question {{question.question_number}}" value="A">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="options"> {{question.B}}
+                      <input type="radio"  
+                        name="Question {{question.question_number}}" value="B">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="options">{{question.C}}
+                      <input type="radio" 
+                        name="Question {{question.question_number}}" value="C">
+                      <span class="checkmark"></span>
+                    </label>
+                    <label class="options">{{question.D}}
+                      <input type="radio" 
+                        name="Question {{question.question_number}}" value="D">
+                      <span class="checkmark"></span>
+                    </label>
+                  </div>
+        
+        
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% endfor %}
+      <div class="text-center"> <button type="submit" class="btn w-75 btn-primary">Submit</button></div> 
+    </form>
+    {% else %}
+    <p class="p-2">The quiz is not yet available.</p>
+    {% endif %}
 </div>
-{% endfor %}
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
 </body>
 {% endblock content %}

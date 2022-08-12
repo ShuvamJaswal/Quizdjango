@@ -1,73 +1,114 @@
-{% extends 'student/base.html' %} 
+{% extends 'accounts/base.html' %}
 {% block content %}
 
 {% load static %}
-<!-- 
-<h1>Question</h1>
-<form method='post' action=''>
-  {% csrf_token %}
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="questionID" id="Option1">
-    <label class="form-check-label" for="Option1">
-      Option1
-    </label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="questionID" id="Option2">
-    <label class="form-check-label" for="Option2">
-      Option2
-    </label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
- -->
-
- <link rel="stylesheet" href="{% static 'css/questions.css' %}" />
-<!--<section>
-  <div class="que_text">
-      abf
-  </div>
-  <div class="option_list">
-      hjbj,hjghb
-      fb
-      <div>s</div>
-      <div>Fg</div>
-  </div>
-</section> -->
-
 
 <body>
 
+  <div class="mb-5">
+  <div class="accordion" id="collaspsebar1">
+
+
+    <div class="card border-primary ">
+      <div class="card-header" id="headingOne">
+        <h2 class="mb-0 ">
+          <button class="btn btn-link  " type="button" data-toggle="collapse" data-target="#availableQuizzes"
+            aria-expanded="true" aria-controls="availableQuizzes">
+            Available Quizzes
+          </button>
+        </h2>
+      </div>
+      <div id="availableQuizzes" class="collapse show" aria-labelledby="headingOne" data-parent="#collapsebar1">
+        <div class="card-body">
+
+          {% for quiz in myQuizzes.not_taken %}
+
+          <div class="card border-primary mb-3 ">
+            <div class="card-body">
+              <h5 class="card-title">{{quiz.name}}</h5>
+              <p class="card-text">
+              <p>Created By: {{quiz.author}} </p>
+              <p class="card-text"><small class="text-muted">Created at: {{quiz.created_date|date:"H:m, d M, Y" }}
+                </small></p>
+              <a href="{% url 'student:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
+            </div>
+          </div>
+          {% empty %}
+  <p class="bg-light text-center  " colspan="5">There are no quizzes available for you to attempt.</p>
+  
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+
+
+<!-- 
+  <div class="card border-primary m-3 p-5">
 
   {% for quiz in myQuizzes.not_taken %}
 
-  <div class="card border-primary mb-3  w-50 " style="background-color: pink;">
-      <div class="card-body">
-        <h5 class="card-title">{{quiz.name}}</h5>
-        <p class="card-text"><p>Created By: {{quiz.author}} at {{quiz.created_date|date}}</p>
-        <a href="{% url 'student:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
-      </div>
-    </div>
-  
-  {% empty %}
-            <p class="bg-light text-center font-italic" colspan="5">You don't have any quiz yet.</p>
-  {% endfor %}
-
-
-<h1>TAken</h1>
-{% for quiz in myQuizzes.taken %}
-{{quiz}}
-<div class="card border-primary mb-3  w-50 " style="background-color: pink;">
+  <div class="card border-primary mb-3 ">
     <div class="card-body">
       <h5 class="card-title">{{quiz.name}}</h5>
-      <p class="card-text"><p>Created By: {{quiz.author}} at {{quiz.created_date|date}}</p>
-         </div>
+      <p class="card-text">
+      <p>Created By: {{quiz.author}} </p>
+      <p class="card-text"><small class="text-muted">Created at: {{quiz.created_date|date:"H:m, d M, Y" }} </small></p>
+      <a href="{% url 'student:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
+    </div>
   </div>
 
+  {% empty %}
+  <p class="bg-light text-center font-italic" colspan="5">There are no quizzes available for you to attempt.</p>
+  {% endfor %}
 
-{% empty %}
-          <p class="bg-light text-center font-italic" colspan="5">You haven't created any quiz yet.</p>
-{% endfor %}
-</body>
+  </div>
+ -->
 
-{% endblock content %}
+
+
+
+
+  {% if myQuizzes.taken %}
+  <div class="mb-5">
+  
+    <div class="accordion" id="collaspsebar">
+
+
+      <div class="card border-primary ">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0 ">
+            <button class="btn btn-link  " type="button" data-toggle="collapse" data-target="#attemptedQuizzes"
+              aria-expanded="true" aria-controls="attemptedQuizzes">
+              Show/Hide Attempted Quizzes
+            </button>
+          </h2>
+        </div>
+    
+
+ 
+      <div id="attemptedQuizzes" class="collapse" aria-labelledby="headingOne" data-parent="#collapsebar">
+        <div class="card-body">
+
+          {% for quiz in myQuizzes.taken %}
+
+          <div class="card border-primary mb-3 ">
+            <div class="card-body">
+              <h5 class="card-title">{{quiz.name}}</h5>
+              <p class="card-text">
+              <p>Created By: {{quiz.author}} </p>
+              <p class="card-text"><small class="text-muted">Created at: {{quiz.created_date|date:"H:m, d M, Y" }}
+                </small></p>
+              <a href="{% url 'student:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+    {% endblock content %}

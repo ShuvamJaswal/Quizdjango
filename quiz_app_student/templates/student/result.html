@@ -1,10 +1,99 @@
-{{result}}
+{% extends 'accounts/base.html' %} 
+{% load custom_tags %}
+{% block content %}
 
-name={{result.student}}
-<br>
-<br>
-{{answer_data}}
-{{ answer_data.item }} fhui
+{% load static %}
+<link rel="stylesheet" href="{% static 'student/questions.css' %}" />
+<body>
+    <div class="card  border-primary m-2 ">
+<div class=" p-3 ">
 
-https://stackoverflow.com/questions/19745091/accessing-dictionary-by-key-in-django-template
-or use template tags
+    <table class="table table-bordered " style="border-width: 5px;">
+        
+        <tr>
+          <td class="col-6"><hr  style="height: 3px;" class="bg-success"> </td>
+          <td>Correct Answer</td>
+        </tr>
+        <tr>
+            <td class="col-6"><hr style="height: 3px;" class="bg-danger"> </td>
+            <td>Incorrect Answer</td>
+          </tr>
+          <tr>
+            <td class="col-6"><hr style="height: 3px;" class="bg-warning"> </td>
+            <td>Unanswered</td>
+          </tr>
+      </table>
+
+        <table class="table table-bordered " style="border-width: 5px;">
+            <tr>
+              <th class="col-6">Name</th>
+              <th class="col-3">Max Points</th>
+              <th class="col-3">Points</th>
+            </tr>
+            <br>
+            <tr>
+              <td>{{result.student}}</td>
+              <td>{{result.max_points}}</td>
+              <td>{{result.points}}</td>
+            </tr>
+          </table>
+        </div>
+
+ 
+
+<div class="card border-primary  m-2 ">
+    <p> 
+
+       {% for question in questions %}
+    <div class="card  {{ answer_data|get_value:question.question_number|assign_border_based_on_answer:question.answer }} m-3 " style="border-width: 5px;">
+      <div class="card-body">
+        <h5 class="card-title">
+          <p class="ml-2 mr-2 mb-2"> Q.{{question.question_number}} {{question.question}}
+          </p>
+          
+        </h5>
+        <div class="card-text">
+  
+          <div class="form-check form-check-inline">
+            <div class="pl-4" id="options">
+              <label class="options ">{{question.A}}
+                <input type="radio" disabled {% if question.answer == 'A' and answer_data|get_value:question.question_number %} checked {% endif %}
+                  name="Question {{question.question_number}}" value="A">
+                <span class="checkmark    {% if answer_data|get_value:question.question_number == "A" %}  {{ answer_data|get_value:question.question_number|is_answer_correct:question.answer }} {% endif %}    "></span>
+              </label>
+              <label class="options"> {{question.B}}
+                <input type="radio" disabled {% if question.answer == 'B'  and answer_data|get_value:question.question_number %} checked {% endif %}
+                  name="Question {{question.question_number}}" value="B">
+                <span class="checkmark {% if answer_data|get_value:question.question_number == "B" %}  {{ answer_data|get_value:question.question_number|is_answer_correct:question.answer }} {% endif %} "></span>
+              </label>
+              <label class="options">{{question.C}}
+                <input type="radio"  disabled {% if question.answer == 'C' and answer_data|get_value:question.question_number  %} checked {% endif %}
+                  name="Question {{question.question_number}}" value="C">
+                <span class="checkmark  {% if answer_data|get_value:question.question_number == "C" %} {{ answer_data|get_value:question.question_number|is_answer_correct:question.answer }} {% endif %} "></span>
+              </label>
+              <label class="options  ">{{question.D}}
+                <input type="radio" disabled {% if question.answer == 'D' and answer_data|get_value:question.question_number %} checked {% endif %}
+                  name="Question {{question.question_number}}" value="D">
+                <span class="checkmark  {% if answer_data|get_value:question.question_number == "D" %} {{ answer_data|get_value:question.question_number|is_answer_correct:question.answer }} {% endif %} "></span>
+              </label>
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+
+
+
+
+
+
+
+
+</div>
+</body>
+{% endblock content %}
