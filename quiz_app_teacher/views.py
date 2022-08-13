@@ -8,7 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
 from accounts.decorators import *
 from django.http import HttpResponseForbidden
-from quiz_app_teacher.models import ANSWER_CHOICES, Course, Question, Quiz
+from quiz_app_teacher.models import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -37,7 +37,7 @@ class TeacherHome(ListView):
 
 @method_decorator([login_required, teacher_required], name='dispatch')
 @method_decorator(never_cache, name='dispatch')
-class newQuiz(CreateView):  # order couse in field
+class newQuiz(CreateView):
     model = Quiz
     template_name = 'teacher/new_quiz.html'
     fields = ['name', 'course', ]
@@ -192,13 +192,33 @@ class addQuestion(UpdateView):
         return context
 
     def form_valid(self, form):
-        if(self.kwargs.get('question_number')):
-            self.object = form.save()
-            return redirect(f"/teacher/quiz/{self.kwargs.get('quiz_id')}/")
+        # if(self.kwargs.get('question_number')):
+        #     self.object = form.save()
+        #     return redirect(f"/teacher/quiz/{self.kwargs.get('quiz_id')}/")
+        # question = form.save(commit=False)
+        # question.question_number = len(
+        #     self.quiz_obj.questions.all())+1
         question = form.save(commit=False)
-        question.question_number = len(
-            self.quiz_obj.questions.all())+1
         question.quiz = self.quiz_obj
         question.save()
         # HttpResponse("Teacher Home")
         return redirect(f"/teacher/quiz/{self.kwargs.get('quiz_id')}/")
+
+
+class ResultView(DetailView):
+    model = Result
+    context_object_name = 'result'
+    template_name = 'teacher/result.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['answer_data'] = eval(self.get_object().get_answer())
+
+        context['questions'] = Quiz.objects.get(
+            quiz_id=self.kwargs.get('quiz_id')).questions.all()
+        context['quiz_id'] = self.kwargs.get('quiz_id')
+        return context
+
+    def get_object(self):
+        print(self.kwargs.get('result_id'))
+        return Result.objects.get(id=self.kwargs.get('result_id'))

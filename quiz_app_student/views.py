@@ -71,8 +71,6 @@ class ResultView(DetailView):
         return context
 
     def get_object(self):
-        print(self.kwargs)
-        print(str(self.request)+"gh")
         return Result.objects.get(id=self.kwargs.get('result_id'))
 
 
@@ -117,6 +115,7 @@ def quiz(request, quiz_id):
                 # print(a)
                 # print(question.answer)
                 # print(request.POST[a] if a in request.POST else '')
+                
                 unanswered.append(question) if a not in request.POST else correct.append(
                     question) if question.answer == request.POST[a] else incorrect.append(question)
                 # print('u' if a not in request.POST else 'c' if question.answer ==
@@ -126,8 +125,8 @@ def quiz(request, quiz_id):
                 f'correct {correct}\n incorrect {incorrect}\n unanswered {unanswered}')
             points = len(correct)
             answer_data = json.dumps(answer_data)
-            r = Result.objects.create(
-                student=request.user.student, max_points=len(questions), points=points, quiz=current_quiz, answer_data=answer_data)
+            r = Result.objects.create(  # max_points=len(questions),
+                student=request.user.student, points=points, quiz=current_quiz, answer_data=answer_data)
             print(request.POST)
             return redirect(request.META.get('HTTP_REFERER'))
             return redirect('/student')

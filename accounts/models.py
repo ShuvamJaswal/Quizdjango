@@ -16,8 +16,6 @@ class User(AbstractUser):
 class Student(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
-    quizzes = models.ManyToManyField(  # TODO:probably not needed.
-        'quiz_app_teacher.Quiz', blank=True, related_name='students')
     course = models.ForeignKey(
         'quiz_app_teacher.Course', on_delete=models.CASCADE, related_name='course_students')
 

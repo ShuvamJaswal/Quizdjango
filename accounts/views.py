@@ -105,13 +105,3 @@ class StudentSignUpView(CreateView):
 @never_cache
 def signup(request):
     return redirect('/')
-    print(request.POST)
-    if request.user.is_authenticated:
-        return redirect('/')
-
-    if 'teacher' in request.POST:
-        form = forms.TeacherSignUpForm()
-    else:
-        form = forms.StudentSignUpForm()
-
-    return render(request, 'accounts/signup.html', {'form': form})

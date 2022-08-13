@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yrta_x+gv%*sx16hxg%%$km)&&*eo7m^t2vz94-jz-0bcsmwz2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']  # TODO: change this for seccurity
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'quiz_app_teacher',
     'accounts',
     # debug toolbar
+      'django_extensions',
     "debug_toolbar",
     # Crispy forms
     'crispy_forms',

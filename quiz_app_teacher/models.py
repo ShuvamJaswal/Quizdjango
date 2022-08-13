@@ -37,11 +37,14 @@ class Quiz(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.quiz_id:
-            self.quiz_id = f"{self.name}-{self.created_date.strftime('%M%S')}"
+            self.quiz_id = f"{self.name.replace(' ','-')}-{self.created_date.strftime('%M%S')}"
         super(Quiz, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.name} By: {self.author} at {self.created_date.strftime('%H:%M, %d/%m/%Y')}"
+
+    class Meta:
+        verbose_name_plural = "Quizzes"
 
 
 class Result(models.Model):
@@ -50,13 +53,15 @@ class Result(models.Model):
     quiz = models.ForeignKey(
         Quiz, on_delete=models.CASCADE, related_name='results')
     points = models.IntegerField(default=0)
-    answer_data = models.TextField(default='')
+    answer_data = models.TextField(default='{}')
     max_points = models.IntegerField(default=0)
     submitted_at = models.DateTimeField(default=timezone.now)
-
     def get_answer(self):
         return eval(json.dumps(self.answer_data))
-
+    def save(self, *args, **kwargs):
+        if not self.max_points:
+            self.max_points = len(self.quiz.questions.all())
+        super(Result, self).save(*args, **kwargs)
     def __str__(self):
         return f"Student name: { str(self.student)} Max Points:{str(self.max_points)} Obtained Points:{str(self.points)}"
 
@@ -72,6 +77,11 @@ class Question(models.Model):
     answer = models.CharField(
         max_length=200, choices=ANSWER_CHOICES, default='A')
     question_number = models.IntegerField()
+
+    def save(self, *args, **kwargs):
+        if not self.question_number:
+            self.question_number = len(self.quiz.questions.all()) + 1
+        super(Question, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.question_number}. {self.question}"

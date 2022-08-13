@@ -37,7 +37,7 @@
           <br>
           {% for result in results %}
           <tr>
-            <td>{{result.student}}</td>
+            <td> <a href="{% url 'teacher:result_view' quiz_id result.id %}" > {{result.student}}</a> </td>
             <td>{{result.points}}</td>
             <td>{{result.submitted_at|date:"H:m, d M, Y"  }}</td>
           </tr>
