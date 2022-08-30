@@ -3,58 +3,54 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'teacher/questions.css' %}" />
 <body>
-  <div class="card  m-2 ">
-    <h5 class="card-title ">
-      <p class="m-2 text-center ">  <b>{{quiz.name}}</b>
+  <div class="card m-2">
+    <h5 class="card-title">
+      <p class="m-2 text-center "><b>{{quiz.name}}</b>
       </p>
     </h5>
-
   </div>
-
   {% if results %}
-<div class="accordion" id="collaspsebar">
-  <div class="mb-5">
-  <div class="card border-primary">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0 ">
-        <button class="btn btn-link  " type="button" data-toggle="collapse" data-target="#results"
-          aria-expanded="true" aria-controls="results">
-          Show/Hide Results
-        </button>
-      </h2>
-    </div>
-    <div id="results" class="collapse" aria-labelledby="headingOne" data-parent="#collaspebar">
-      <div class="card-body">
-        {% if results %}
-        <p>
-        <table class="table  table-bordered">
-          <!-- <caption style="caption-side: top; text-align:center; font-size: 50px;">Result</caption> -->
-          <tr>
-            <th>Student Name</th>
-            <th>Points</th>
-            <th>Attempted</th>
-          </tr>
-          <br>
-          {% for result in results %}
-          <tr>
-            <td> <a href="{% url 'teacher:result_view' quiz_id result.id %}" > {{result.student}}</a> </td>
-            <td>{{result.points}}</td>
-            <td>{{result.submitted_at|date:"H:m, d M, Y"  }}</td>
-          </tr>
-          {% endfor %}
-        </table>
-        </p>
-        {% else %}
-        <p class="bg-light text-center  " colspan="5">None of the students have attempted the quiz yet.</p>
-        {% endif %}
+  <div class="accordion" id="collaspsebar">
+    <div class="mb-5">
+      <div class="card border-primary">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link  " type="button" data-toggle="collapse" data-target="#results"
+              aria-expanded="true" aria-controls="results">
+              Show/Hide Results
+            </button>
+          </h2>
+        </div>
+        <div id="results" class="collapse" aria-labelledby="headingOne" data-parent="#collaspebar">
+          <div class="card-body">
+          {% if results %}
+            <p>
+            <table class="table  table-bordered">
+              <tr>
+                <th>Student Name</th>
+                <th>Points</th>
+                <th>Attempted</th>
+              </tr>
+              <br>
+              {% for result in results %}
+              <tr>
+                <td> <a href="{% url 'teacher:result_view' quiz_id result.id %}" > {{result.student}}</a> </td>
+                <td>{{result.points}}</td>
+                <td>{{result.submitted_at|date:"H:m, d M, Y"  }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+            </p>
+            {% else %}
+            <p class="bg-light text-center" colspan="5">None of the students have attempted the quiz yet.</p>
+            {% endif %}
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </div>
-</div>
   {% endif %}
-<div class="card  border-primary m-2 ">
-  
+  <div class="card  border-primary m-2 ">
     <a  href="{% url 'teacher:addQuestion' quiz_id  %}" class="btn w-50 ml-3 mt-3 btn-primary">Add Questions</a>
     {% for question in questions %}
   <div class="card border-primary m-3 ">
@@ -66,7 +62,6 @@
         </p>
       </h5>
       <div class="card-text">
-
         <div class="form-check form-check-inline">
           <div class="pl-4" id="options">
             <label class="options ">{{question.A}}
@@ -90,207 +85,11 @@
               <span class="checkmark"></span>
             </label>
           </div>
-
-
         </div>
       </div>
     </div>
   </div>
   {% endfor %}
 </div>
-
-
 </body>
-
-
-
-
-
-
-
-<!-- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="accordion" id="accordionExample">
-
-<div class="row">
-    {% if results.count > 0 %}
-
-    <div class="col card">
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#question" aria-expanded="false" aria-controls="result">
-            Show questions
-          </button>
-    </div>
-    {% endif %}  
-    <div class="col card">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#result" aria-expanded="false" aria-controls="result">
-          Show Result
-        </button>
-  
-</div>
-</div>
-</div>
-
- <div class="panel-group" id="tabs">
-<p >
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#question" aria-expanded="true" aria-controls="collapseExample">
-        Questions
-      </button><button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#result" aria-expanded="false" aria-controls="collapseExample">
-        Result
-      </button>
-
-</p>
-
-</div> -->
-
-{% if results.count > 0 %}
-<!-- <table class="table  table-bordered">
-    <caption style="caption-side: top; text-align:center; font-size: 50px;">Result</caption>
-            <tr>
-                <th>Student Name</th>
-                <th>Points</th>
-            </tr>
-            <br>
-            {% for result in results %}
-            <tr>
-                <td>{{result.student}}</td>
-                <td>{{result.points}}</td>
-            </tr>
-            {% endfor %}
-</table> -->
-{% endif %}
-
-<!-- <body>
-    <div id="result" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-      -->
-<!-- <div id="result" class="collapse" data-parent="#tabs" aria-labelledby="headingOne"> -->
-<!-- <div class="card-body"> -->
-<!--           
-        <p>    <table class="table  table-bordered">
-                <caption style="caption-side: top; text-align:center; font-size: 50px;">Result</caption>
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Points</th>
-                        </tr>
-                        <br>
-                        {% for result in results %}
-                        <tr>
-                            <td>{{result.student}}</td>
-                            <td>{{result.points}}</td>
-                        </tr>
-                        {% endfor %}
-            </table>
-        </p>
-        
-        </div>
-      </div> -->
-
-
-
-
-<!-- <div id="question" class="collapse show" data-parent="#tabs" aria-labelledby="headingOne"> -->
-<!-- <div id="question" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-     
-    <a href="{% url 'teacher:addQuestion' quiz_id  %}" class="btn btn-primary">Add Questions</a>
-      
-    {% for question in questions %}
-
-       
-    <div class="card border-primary m-3 ">
-        <div class="card-body">
-          <h5 class="card-title"><p class="ml-5 mr-5 mb-5"> Q.{{question.question_number}} {{question.question}} 
-            <a href="{% url 'teacher:updateQuestion' question.quiz.quiz_id question.question_number %}" class="btn btn-primary float-right">Edit</a>  
-   
-            
-    
-          </p></h5>
-           <p class="card-text form-check form-check-inline"><p>Created By: {{quiz.author}} at {{quiz.created_date|date}}</p> -->
-<!-- <div class="card-text">
-            
-            <div class="form-check form-check-inline">
-                <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-                    <label class="options ">{{question.A}}
-                        <input type="radio" disabled {% if question.answer == 'A' %} checked {% endif %} name="Question {{question.question_number}}" value="A">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="options">   {{question.B}}
-                      <input type="radio" disabled {% if question.answer == 'B' %} checked {% endif %} name="Question {{question.question_number}}"value="B">
-                      <span class="checkmark"></span>
-                  </label>
-                    <label class="options">{{question.C}}
-                        <input type="radio" disabled {% if question.answer == 'C' %} checked {% endif %} name="Question {{question.question_number}}"value="C">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="options">{{question.D}}
-                        <input type="radio" disabled {% if question.answer == 'D' %} checked {% endif %} name="Question {{question.question_number}}" value="D">
-                        <span class="checkmark"></span>
-                    </label>
-                </div> -->
-
-<!-- <label class="options">{{question.A}}
-                    <input class="form-check-input" type="radio" disabled {% if question.answer == 'A' %} checked {% endif %}    name="Question {{question.question_number}}" value="A">
-                    <span class="checkmark"></span>
-                </label>
-                <label class="options">{{question.B}}
-                    <input class="form-check-input" type="radio" disabled {% if question.answer == 'B' %} checked {% endif %}    name="Question {{question.question_number}}" value="A">
-                    <span class="checkmark"></span>
-                </label> -->
-
-
-<!-- <input class="form-check-input" type="radio" id="inlineCheckbox2" disabled {% if question.answer == 'B' %} checked {% endif %}    name="Question {{question.question_number}}" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">{{question.B}}</label> -->
-<!-- </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">2</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" id="inlineCheckbox2" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">2</label>
-              </div> -->
-
-<!-- </div>
-        </div>
-      </div>
-    </div> -->
-<!-- <div class="container mt-sm-5 my-1" >
-  <div class="question ml-sm-5 pl-sm-5 pt-2">
-    
-    <div class="py-2 h5"><b>Q.{{question.question_number}} {{question.question}}</b></div> -->
-<!-- <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
-          <label class="options">{{question.A}}
-              <input type="radio" disabled {% if question.answer == 'A' %} checked {% endif %}    name="Question {{question.question_number}}" value="A">
-              <span class="checkmark"></span>
-          </label>
-          <label class="options">{{question.B}}
-            <input type="radio"  disabled {% if question.answer == 'B' %} checked {% endif %}  name="Question {{question.question_number}}"value="B">
-            <span class="checkmark"></span>
-          </label>
-          <label class="options">{{question.C}}
-              <input   type="radio" disabled {% if question.answer == 'C' %} checked {% endif %}  name="Question {{question.question_number}}"value="C">
-              <span class="checkmark"></span>
-          </label>
-          <label class="options">{{question.D}}
-              <input   type="radio" disabled {% if question.answer == 'D' %} checked {% endif %}  name="Question {{question.question_number}}" value="D">
-              <span class="checkmark"></span>
-          </label> -->
-<!-- </div> -->
-<!-- </div>
-</div> -->
-<!-- {% endfor %} -->
-<!-- </div> -->
-<!-- </body> -->
-
 {% endblock content %}

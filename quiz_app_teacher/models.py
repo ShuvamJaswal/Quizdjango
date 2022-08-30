@@ -27,6 +27,7 @@ class Course(models.Model):
 
 
 class Quiz(models.Model):
+    
     name = models.CharField(max_length=250)
     quiz_id = models.CharField(max_length=300,)
     created_date = models.DateTimeField(default=timezone.now)
@@ -45,6 +46,7 @@ class Quiz(models.Model):
 
     class Meta:
         verbose_name_plural = "Quizzes"
+        ordering=['-created_date']
 
 
 class Result(models.Model):

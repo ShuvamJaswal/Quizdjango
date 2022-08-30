@@ -16,9 +16,9 @@ def home(request):
     if request.user.is_authenticated:
         print(request.user.is_teacher)
         if request.user.is_teacher:
-            return redirect('/teacher')
+            return redirect('/teacher/')
         elif request.user.is_student:
-            return redirect('/student')
+            return redirect('/student/')
         else:
             return redirect('/admin')
     return render(request, 'accounts/home.html')
@@ -26,14 +26,10 @@ def home(request):
 
 class UserLogin(auth_views.LoginView):
     def dispatch(self, request, *args, **kwargs):
-
         if self.request.user.is_authenticated:
             logout(request)
-
         return super().dispatch(request, *args, **kwargs)
-
     def get_success_url(self):
-        # if url comes from .teaceher and login is done by student
         return super().get_default_redirect_url()
 
 

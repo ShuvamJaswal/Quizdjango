@@ -6,7 +6,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-
     first_name = models.CharField("first name", max_length=150, blank=False)
     email = models.EmailField(unique=True, blank=False)
     is_student = models.BooleanField(default=False)

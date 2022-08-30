@@ -36,6 +36,7 @@ class ResultAdmin(admin.ModelAdmin):
         'submitted_at',
     )
     list_filter = ('student', 'quiz', 'submitted_at')
+    
 
 
 @admin.register(Question)

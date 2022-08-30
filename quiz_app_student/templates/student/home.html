@@ -1,14 +1,9 @@
 {% extends 'accounts/base.html' %}
 {% block content %}
-
 {% load static %}
-
 <body>
-
   <div class="mb-5">
   <div class="accordion" id="collaspsebar1">
-
-
     <div class="card border-primary ">
       <div class="card-header" id="headingOne">
         <h2 class="mb-0 ">
@@ -20,9 +15,7 @@
       </div>
       <div id="availableQuizzes" class="collapse show" aria-labelledby="headingOne" data-parent="#collapsebar1">
         <div class="card-body">
-
           {% for quiz in myQuizzes.not_taken %}
-
           <div class="card border-primary mb-3 ">
             <div class="card-body">
               <h5 class="card-title">{{quiz.name}}</h5>
@@ -35,48 +28,15 @@
           </div>
           {% empty %}
   <p class="bg-light text-center  " colspan="5">There are no quizzes available for you to attempt.</p>
-  
           {% endfor %}
-
         </div>
       </div>
     </div>
-  </div></div>
-
-
-
-<!-- 
-  <div class="card border-primary m-3 p-5">
-
-  {% for quiz in myQuizzes.not_taken %}
-
-  <div class="card border-primary mb-3 ">
-    <div class="card-body">
-      <h5 class="card-title">{{quiz.name}}</h5>
-      <p class="card-text">
-      <p>Created By: {{quiz.author}} </p>
-      <p class="card-text"><small class="text-muted">Created at: {{quiz.created_date|date:"H:m, d M, Y" }} </small></p>
-      <a href="{% url 'student:quiz' quiz.quiz_id %}" class="btn btn-primary">View Quiz</a>
-    </div>
   </div>
-
-  {% empty %}
-  <p class="bg-light text-center font-italic" colspan="5">There are no quizzes available for you to attempt.</p>
-  {% endfor %}
-
-  </div>
- -->
-
-
-
-
-
+</div>
   {% if myQuizzes.taken %}
   <div class="mb-5">
-  
     <div class="accordion" id="collaspsebar">
-
-
       <div class="card border-primary ">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0 ">
@@ -86,14 +46,9 @@
             </button>
           </h2>
         </div>
-    
-
- 
       <div id="attemptedQuizzes" class="collapse" aria-labelledby="headingOne" data-parent="#collapsebar">
         <div class="card-body">
-
           {% for quiz in myQuizzes.taken %}
-
           <div class="card border-primary mb-3 ">
             <div class="card-body">
               <h5 class="card-title">{{quiz.name}}</h5>
@@ -105,10 +60,9 @@
             </div>
           </div>
           {% endfor %}
-
         </div>
       </div>
     </div>
   </div>
   {% endif %}
-    {% endblock content %}
+{% endblock content %}

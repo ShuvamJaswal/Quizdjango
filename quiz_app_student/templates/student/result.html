@@ -5,13 +5,15 @@
 <link rel="stylesheet" href="{% static 'student/questions.css' %}" />
 <body>
     <div class="card  border-primary m-2 ">
-<div class=" p-3 ">
-    <table class="table table-bordered " style="border-width: 5px;">       
-        <tr>
-          <td class="col-6"><hr  style="height: 3px;" class="bg-success"> </td>
-          <td>Correct Answer</td>
-        </tr>
-        <tr>
+      <div class=" p-3 ">
+        <table class="table table-bordered " style="border-width: 5px;">
+          <tr>
+            <td class="col-6">
+              <hr style="height: 3px;" class="bg-success">
+            </td>
+            <td>Correct Answer</td>
+          </tr>
+          <tr>
             <td class="col-6"><hr style="height: 3px;" class="bg-danger"> </td>
             <td>Incorrect Answer</td>
           </tr>
@@ -19,22 +21,22 @@
             <td class="col-6"><hr style="height: 3px;" class="bg-warning"> </td>
             <td>Unanswered</td>
           </tr>
-      </table>
+        </table>
         <table class="table table-bordered " style="border-width: 5px;">
-            <tr>
-              <th class="col-6">Name</th>
-              <th class="col-3">Max Points</th>
-              <th class="col-3">Points</th>
-            </tr>
-            <br>
-            <tr>
-              <td>{{result.student}}</td>
-              <td>{{result.max_points}}</td>
-              <td>{{result.points}}</td>
-            </tr>
-          </table>
-        </div>
-<div class="card border-primary  m-2 ">
+          <tr>
+            <th class="col-6">Name</th>
+            <th class="col-3">Max Points</th>
+            <th class="col-3">Points</th>
+          </tr>
+          <br>
+          <tr>
+            <td>{{result.student}}</td>
+            <td>{{result.max_points}}</td>
+            <td>{{result.points}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="card border-primary  m-2 ">
     <p> 
        {% for question in questions %}
     <div class="card  {{ answer_data|get_value:question.question_number|assign_border_based_on_answer:question.answer }} m-3 " style="border-width: 5px;">

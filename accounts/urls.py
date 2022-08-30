@@ -5,9 +5,7 @@ import django.contrib.auth.urls
 from . import views
 app_name = 'accounts'
 urlpatterns = [
-    #path('', include('classroom.urls')),
     path('', views.home, name='home'),
-    #
     path('accounts/logout/', auth_views.LogoutView.as_view(next_page='/'),),
     path('accounts/login/', views.UserLogin.as_view(
         template_name='accounts/login.html',), name='login'),
@@ -17,7 +15,4 @@ urlpatterns = [
     path('accounts/signup/teacher/',
          views.TeacherSignUpView.as_view(), name='teacher_signup'),
     path('accounts/', include('django.contrib.auth.urls')),
-    # path('accounts/signup/', classroom.SignUpView.as_view(), name='signup'),
-    # path('accounts/signup/student/', students.StudentSignUpView.as_view(), name='student_signup'),
-    # path('accounts/signup/teacher/', teachers.TeacherSignUpView.as_view(), name='teacher_signup'),
 ]

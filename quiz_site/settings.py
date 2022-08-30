@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yrta_x+gv%*sx16hxg%%$km)&&*eo7m^t2vz94-jz-0bcsmwz2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']  # TODO: change this for seccurity
 
@@ -63,7 +63,10 @@ MIDDLEWARE = ["debug_toolbar.middleware.DebugToolbarMiddleware",  # debug toolba
               ]
 
 ROOT_URLCONF = 'quiz_site.urls'
-
+#TODO
+CSRF_TRUSTED_ORIGINS = [
+    'https://773b-103-223-8-6.in.ngrok.io'
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -18,20 +18,16 @@ from django.contrib import messages
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import *
 from crispy_forms.bootstrap import *
-# call these decorators in CBV on a specific function in this case 'dispatch'
-
 
 @method_decorator([login_required, teacher_required], name='dispatch')
-# so that browser doesn't stores web page n reloads it from server(even when pressing back button.)
 @method_decorator(never_cache, name='dispatch')
 class TeacherHome(ListView):
     model = Quiz
-    # variable used to access sent data in templates
     context_object_name = 'myQuizzes'
     template_name = 'teacher/home.html'
 
     def get_queryset(self):
-        queryset = self.request.user.teacher.quizzes.all().order_by('created_date')
+        queryset = self.request.user.teacher.quizzes.all()
         return queryset
 
 
@@ -80,7 +76,6 @@ class CourseView(CreateView):
         messages.add_message(self.request, messages.SUCCESS,
                              'Course added successfully.')
         return redirect(self.get_success_url())
-        # TODO do from here
 
     def get_success_url(self):
         # get value of return keyword if it exists
@@ -201,6 +196,9 @@ class addQuestion(UpdateView):
         question = form.save(commit=False)
         question.quiz = self.quiz_obj
         question.save()
+        messages.add_message(self.request, messages.SUCCESS,
+                             "Question  added successfully.")
+        
         # HttpResponse("Teacher Home")
         return redirect(f"/teacher/quiz/{self.kwargs.get('quiz_id')}/")
 
