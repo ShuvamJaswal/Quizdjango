@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yrta_x+gv%*sx16hxg%%$km)&&*eo7m^t2vz94-jz-0bcsmwz2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['quizsite.pythonanywhere.com','localhost'] 
 

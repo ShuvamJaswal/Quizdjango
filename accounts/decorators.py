@@ -3,6 +3,7 @@ from django.contrib import messages
 from quiz_app_teacher.models import Quiz
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
+from functools import wraps
 def teacher_required(function=None,):
     actual_decorator = user_passes_test(lambda u: u.is_teacher,)
     if function:
@@ -16,6 +17,7 @@ def student_required(function=None,):
     return actual_decorator
 
 def quiz_was_created_by_loggedin_user(function=None):
+    @wraps(function)
     def wrap(request, *args, **kwargs):
         quiz = Quiz.objects.get(quiz_id=kwargs['quiz_id'])
         if quiz.author == request.user.teacher:
