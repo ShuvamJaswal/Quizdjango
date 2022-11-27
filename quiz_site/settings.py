@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-yrta_x+gv%*sx16hxg%%$km)&&*eo7m^t2vz94-jz-0bcsmwz2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['quizsite.pythonanywhere.com','localhost'] 
+ALLOWED_HOSTS = ['quizsite.pythonanywhere.com','localhost','127.0.0.1'] 
 
 
 # Application definition
@@ -60,7 +60,7 @@ MIDDLEWARE = [
               ]
 
 ROOT_URLCONF = 'quiz_site.urls'
-
+#STATIC_ROOT = "/home/quizsite/Quizdjango/static"
 CSRF_TRUSTED_ORIGINS = [
     'https://quizsite.pythonanywhere.com'
 ]
