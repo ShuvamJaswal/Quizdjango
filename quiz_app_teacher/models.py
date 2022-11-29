@@ -38,7 +38,7 @@ class Quiz(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.quiz_id:
-            self.quiz_id = f"{self.name.replace(' ','-')}-{self.created_date.strftime('%M%S')}"
+            self.quiz_id = f"{self.name.replace(' ','-')}-{self.created_date.strftime('%M%S%f')}"
         super(Quiz, self).save(*args, **kwargs)
 
     def __str__(self):

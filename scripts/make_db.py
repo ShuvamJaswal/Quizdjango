@@ -6,6 +6,26 @@ words=['a', 'aa', 'aaa', 'aaron', 'ab', 'abandoned', 'abc', 'aberdeen', 'abiliti
 
 def run():
     data()
+Teachers_data=[
+    ['Sonia','Kapila','12345678','soniakapila@gmail.com'],
+    ['Jaspal','Singh','12345678','jaspalsingh@gmail.com'],
+    ['Kanta','Devi','12345678','kantadevi@gmail.com'],
+    ['Neelam','Seth','12345678','neelamseth@gmail.com']
+]
+Course_data=[
+['MCA',2],
+['BTECH CSE',1],
+['BCOM',4]
+]
+Student_data=[
+    ['Shuvam','Jaswal','1234567890','shuvamjaswal@gmail.com'],
+    ['Vishal','Kumar','1234567890','Vishal@gmail.com'],
+    ['Varun','Kumar','1234567890','varunkumar@gmail.com'],
+    ['Imran','Ansari','1234567890','imranansari@gmail.com'],
+    ['Karun','Beri','1234567890','karunberi@gmail.com'],
+    ['Sushrut','Sharma','1234567890','sushrutsharma@gmail.com'],
+]
+
 def data():
     users = []
     teachers = []
@@ -14,38 +34,397 @@ def data():
     quizzes = []
     questions = []
     results=[]
-
-    for i in range(1, 4):
+    for i in range(0, 4):
         users.append(User.objects.create_user(
-            f'user{i}', password="ilililil", email=f'abc{i}@gmail.com', is_teacher=True))
-    for i in range(4, 10):
+            f'{Teachers_data[i][0]}{Teachers_data[i][1]}'.lower(), password=Teachers_data[i][2], email=Teachers_data[i][3], is_teacher=True))
+        users[i].first_name = Teachers_data[i][0]
+        users[i].last_name = Teachers_data[i][1]
+        users[i].save()
+    for i in range(0, 6):
         users.append(User.objects.create_user(
-            f'user{i}', password="ilililil", email=f'abc{i}@gmail.com', is_student=True))
-    for i in range(1, 4):
-    
-        courses.append(Course.objects.create(name=random.choice(words), year=i))
-    for i in range(1, 4):
-        teachers.append(Teacher.objects.create(user=users[i-1]))
+            f'{Student_data[i][0]}{Student_data[i][1]}'.lower(), password=Student_data[i][2], email=Student_data[i][3], is_student=True))
+        users[i+4].first_name = Student_data[i][0]
+        users[i+4].last_name = Student_data[i][1]
+        users[i+4].save()
+    print(len(users))
+    for i in range(0, 3):
+        courses.append(Course.objects.create(name=Course_data[i][0], year=Course_data[i][1]))
+    for i in range(0, 4):
+        teachers.append(Teacher.objects.create(user=users[i]))
     for i in range(4, 10):
-        user=users[i-1]
+        user=users[i]
         course=random.choice(courses)
         students.append(Student.objects.create(
             user=user, course=course))
-    for i in range(1,30):
-        quizzes.append(Quiz.objects.create(name=f'quiz{i}',author=random.choice(teachers),course=random.choice(courses)))
-    for i in range(1,150):
-        rand_words=[random.choice(words) for i in range(4)]
-        questions.append(Question.objects.create(quiz=random.choice(quizzes),question=f'Question{i}',A=rand_words[0],B=rand_words[1],C=rand_words[2],D=rand_words[3], answer=random.choice(['A','B','C','D'])))
-    
+    Cse_Quiz_data=[
+        ['SQL',random.choice(teachers),courses[1]],
+        ['Python',random.choice(teachers),courses[1]],
+        ['Java',random.choice(teachers),courses[1]]
+    ]
+    for i in Cse_Quiz_data:
+        quizzes.append(Quiz.objects.create(name=f'{i[0]}',author=i[1],course=i[2]))
+    Mca_Quiz_data=[
+        ['AI',random.choice(teachers),courses[0]],
+        ['SQL',random.choice(teachers),courses[0]],
+    ]
+    for i in Mca_Quiz_data:
+        quizzes.append(Quiz.objects.create(name=f'{i[0]}',author=i[1],course=i[2]))
+    BCOM_Quiz_data=[
+        ['Accounts',random.choice(teachers),courses[2]],
+        ['Economics',random.choice(teachers),courses[2]],
+    ]
+    for i in BCOM_Quiz_data:
+        quizzes.append(Quiz.objects.create(name=f'{i[0]}',author=i[1],course=i[2]))
+    # for i in range(1,150):
+    #     rand_words=[random.choice(words) for i in range(4)]
+    #     questions.append(Question.objects.create(quiz=random.choice(quizzes),question=f'Question{i}',A=rand_words[0],B=rand_words[1],C=rand_words[2],D=rand_words[3], answer=random.choice(['A','B','C','D'])))
+    Questions_Data=[
+        [#SQL
+            {'quiz':quizzes[0],
+                'question':'What does SQL stand for?',
+                'A':'Structured Query Language',
+                'B':'Structured Question Language',
+                'C':'Strong Question Language',
+                'D':'Strong Query Language',
+                'answer':'A'},
+            {
+                'quiz':quizzes[0],
+                'question':'Which SQL statement is used to update data in a database?',
+                'A':'MODIFY',
+                'B':'SAVE AS',
+                'C':'UPDATE',
+                'D':'SAVE',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[0],
+                'question':'Which SQL statement is used to insert new data in a database?',
+                'A':'INSERT NEW',
+                'B':'ADD NEW',
+                'C':'INSERT INTO',
+                'D':'ADD RECORD',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[0],
+                'question':'Which SQL keyword is used to sort the result-set?',
+                'A':'ORDER BY',
+                'B':'SORT',
+                'C':'SORT BY',
+                'D':'ORDER',
+                'answer':'A'
+            },
+            {
+                'quiz':quizzes[0],
+                'question':'What is the most common type of join?',
+                'A':'JOINED',
+                'B':'INNER JOIN',
+                'C':'JOINED TABLE',
+                'D':'INSIDE JOIN',
+                'answer':'B'
+            },
+            
+        ],
+        [#Python
+      {
+                'quiz':quizzes[1],
+                'question':'How do you insert COMMENTS in Python code?',
+                'A':'/*This is a comment*/',
+                'B':'//This is a comment//',
+                'C':'//This is a comment',
+                'D':'#This is a comment',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[1],
+                'question':'Which one is NOT a legal variable name?',
+                'A':'_myvar',
+                'B':'my_var',
+                'C':'my-var',
+                'D':'myvar',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[1],
+                'question':'What is the correct file extension for Python files?',
+                'A':'.pyth',
+                'B':',py',
+                'C':'.pt',
+                'D':'.pyt',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[1],
+                'question':'Which method can be used to remove any whitespace from both the beginning and the end of a string?',
+                'A':'ptrim()',
+                'B':'strip()',
+                'C':'trim()',
+                'D':'len()',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[1],
+                'question':'Which method can be used to return a string in upper case letters?',
+                'A':'uppercase()',
+                'B':'toUpperCase()',
+                'C':'upper()',
+                'D':'upperCase()',
+                'answer':'C'
+            },
+            
+        ],
+        [#Java
+{
+                'quiz':quizzes[2],
+                'question':'Which method can be used to find the length of a string?',
+                'A':'len()',
+                'B':'getSize()',
+                'C':'length()',
+                'D':'getLength()',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[2],
+                'question':'Which operator can be used to compare two values?',
+                'A':'<>',
+                'B':'=',
+                'C':'==',
+                'D':'><',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[2],
+                'question':'To declare an array in Java, define the variable type with:',
+                'A':'()',
+                'B':'[]',
+                'C':'{}',
+                'D':'(}',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[2],
+                'question':'Array indexes start with:',
+                'A':'1',
+                'B':'0',
+                'C':'-1',
+                'D':'2',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[2],
+                'question':'Which keyword is used to create a class in Java?',
+                'A':'MyClass',
+                'B':'class',
+                'C':'className',
+                'D':'class()',
+                'answer':'B'
+            }
+        ],
+        [#AI
+         {
+                'quiz':quizzes[3],
+                'question':'Artificial Intelligence is about_____.',
+                'A':'Playing a game on Computer',
+                'B':'Making a machine Intelligent',
+                'C':'Programming on Machine with your Own Intelligence',
+                'D':'Putting your intelligence in Machine',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[3],
+                'question':'Who is known as the -Father of AI"?',
+                'A':'Fisher Ada',
+                'B':'Alan Turing',
+                'C':'John McCarthy',
+                'D':'Allen Newell',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[3],
+                'question':'Which of the given language is not commonly used for AI?',
+                'A':'LISP',
+                'B':'PROLOG',
+                'C':'Python',
+                'D':'Perl',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[3],
+                'question':'The component of an Expert system is_________.',
+                'A':'Knowledge Base',
+                'B':'Inference Engine',
+                'C':'User Interface',
+                'D':'All of the above',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[3],
+                'question':'The available ways to solve a problem of state-space-search.',
+                'A':'1',
+                'B':'2',
+                'C':'3',
+                'D':'4',
+                'answer':'B'
+            }
+        ],
+        [#SQL
+            {'quiz':quizzes[4],
+                'question':'What does SQL stand for?',
+                'A':'Structured Query Language',
+                'B':'Structured Question Language',
+                'C':'Strong Question Language',
+                'D':'Strong Query Language',
+                'answer':'A'},
+            {
+                'quiz':quizzes[4],
+                'question':'Which SQL statement is used to update data in a database?',
+                'A':'MODIFY',
+                'B':'SAVE AS',
+                'C':'UPDATE',
+                'D':'SAVE',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[4],
+                'question':'Which SQL statement is used to insert new data in a database?',
+                'A':'INSERT NEW',
+                'B':'ADD NEW',
+                'C':'INSERT INTO',
+                'D':'ADD RECORD',
+                'answer':'C'
+            },
+            {
+                'quiz':quizzes[4],
+                'question':'Which SQL keyword is used to sort the result-set?',
+                'A':'ORDER BY',
+                'B':'SORT',
+                'C':'SORT BY',
+                'D':'ORDER',
+                'answer':'A'
+            },
+            {
+                'quiz':quizzes[4],
+                'question':'What is the most common type of join?',
+                'A':'JOINED',
+                'B':'INNER JOIN',
+                'C':'JOINED TABLE',
+                'D':'INSIDE JOIN',
+                'answer':'B'
+            },  
+        ],
+        [#Accounts
+          {
+                'quiz':quizzes[5],
+                'question':'Which of the following account types increase by debits in double-entry accounting?',
+                'A':'Assets, Expenses, Losses',
+                'B':'Assets, Revenue, Gains',
+                'C':'Expenses, Liabilities, Losses',
+                'D':'Gains, Expenses, Liabilities',
+                'answer':'A'
+            },
+            {
+                'quiz':quizzes[5],
+                'question':'When are liabilities recorded under the accrual basis of accounting?',
+                'A':'When incurred',
+                'B':'When paid',
+                'C':'At the end of the fiscal year',
+                'D':'When bank accounts are reconciled',
+                'answer':'A'
+            },
+            {
+                'quiz':quizzes[5],
+                'question':'Which is not classified as a current asset?',
+                'A':'Cash',
+                'B':'Product inventory',
+                'C':'Prepaid Liabilities',
+                'D':'Property',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[5],
+                'question':'What is the minimum number of accounts that accounting entries can have?',
+                'A':'1',
+                'B':'4',
+                'C':'5',
+                'D':'2',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[5],
+                'question':'In a journal entry, a debit decreases which of the following accounts?',
+                'A':'Cash',
+                'B':'Accounts Payable',
+                'C':'Supplies Expense',
+                'D':'Both A and C',
+                'answer':'B'
+            },
+        ],
+        [#Economics
+          {
+                'quiz':quizzes[6],
+                'question':'What do you mean by the supply of goods?',
+                'A':'Stock available for sale',
+                'B':'Total stock in the warehouse',
+                'C':'The actual production of the goods',
+                'D':'Quantity of the goods offered for sale at a particular price per unit of time',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[6],
+                'question':'What do you mean by a mixed economy?',
+                'A':'Modern and traditional industries',
+                'B':'Public and private sectors',
+                'C':'Foreign and domestic investments',
+                'D':'Commercial and subsistence farming',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[6],
+                'question':'Which of the following is the reason for the decline in the child sex ratio in India?',
+                'A':'Low fertility rate',
+                'B':'Female foeticide',
+                'C':'Incentives for a boy child from the government',
+                'D':' None of the above',
+                'answer':'B'
+            },
+            {
+                'quiz':quizzes[6],
+                'question':'What is the main economic problem faced by the society?',
+                'A':'Unemployment',
+                'B':'Inequality',
+                'C':'Poverty',
+                'D':'Scarcity',
+                'answer':'D'
+            },
+            {
+                'quiz':quizzes[6],
+                'question':'The goal of a pure market economy is to meet the desire of ______ .',
+                'A':'Consumers',
+                'B':'Companies',
+                'C':'Workers',
+                'D':'The government',
+                'answer':'A'
+            },
+        ]
+    ]
+    for subject in Questions_Data:
+        for question in subject:
+            Question.objects.create(quiz=question['quiz'],question=question['question'],A=question['A'],B=question['B'],C=question['C'],D=question['D'], answer=question['answer'])
+
+    return
     for i in range(1,15):
         all_students=Student.objects.all()
         student=random.choice(all_students)
         course=student.course
         quiz=random.choice(course.quizzes.all())
-        while Result.objects.filter(student=student,quiz=quiz).exists():
+        a=1
+        while Result.objects.filter(student=student,quiz=quiz).exists() and a<10:
+
             student=random.choice(all_students)
             course=student.course
             quiz=random.choice(course.quizzes.all())
+            a+=1
+        if a==10:break
         # quiz=random.choice(quizzes)
         # course=quiz.course
         # while (not course.course_students.all()):
@@ -58,7 +437,7 @@ def data():
         points=0
         # for i in range(0,int((0.5 * len( quiz.questions.all()) +1 ))):
         for i in range(0,len(quiz.questions.all())): 
-            if i not in [2,5,7]:
+            if i not in [5,7]:
                 answer_data[f'Question {i+1}']=random.choice(['A','B','C','D'])
         for question in quiz.questions.all():
             a = 'Question ' + str(question.question_number)
