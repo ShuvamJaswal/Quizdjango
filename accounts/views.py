@@ -14,7 +14,7 @@ from django.contrib import messages
 @never_cache
 def home(request):
     if request.user.is_authenticated:
-        print(request.user.is_teacher)
+        # print(request.user.is_teacher)
         if request.user.is_teacher:
             return redirect('/teacher/')
         elif request.user.is_student:
