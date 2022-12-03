@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from accounts.decorators import *
 from django.http import HttpResponseForbidden
 from quiz_app_teacher.models import *
@@ -160,6 +160,9 @@ class addQuestion(UpdateView):
 
     def get(self, request, *args, **kwargs):
         if self.quiz_obj.results.all():
+            context = {'message': "You cannot edit a quiz which is attempted by a student."
+                       }
+            return render(request, 'teacher/forbidden.html', context)
             return HttpResponseForbidden("You cannot edit a quiz which is attempted by a student.")
         return super().get(request, *args, **kwargs)
 

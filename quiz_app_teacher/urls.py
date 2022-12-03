@@ -14,4 +14,7 @@ urlpatterns = [
          views.addQuestion.as_view(), name='updateQuestion'),
      path('quiz/<str:quiz_id>/resultview/<int:result_id>',
          views.ResultView.as_view(), name='result_view'),
+    path('quiz/<str:quiz_id>/resultview/<int:result_id>',
+         views.ResultView.as_view(), name='result_view'),
+         
 ]
